@@ -115,3 +115,111 @@ SELECT Text_Column,
            INSTR(Text_Column, ']') - INSTR(Text_Column, '[') - 1
        ) AS Substring_Between
 FROM Your_Table;
+
+
+-- numerical functions
+-- 1 Round Unit_Price to 2 decimal places.
+SELECT Unit_Price,
+       ROUND(Unit_Price, 2) AS Rounded_Price
+FROM Orders;
+--2 Find total sales per order.
+SELECT Order_ID,
+       Customer_Name,
+       Quantity * Unit_Price AS Total_Sales
+FROM Orders;
+--3 Calculate average order value
+SELECT AVG(Quantity * Unit_Price) AS Avg_Order_Value
+FROM Orders;
+--4 Find highest product price.
+SELECT MAX(Unit_Price) AS Highest_Price
+FROM Orders;
+-- 5 Find lowest product price.
+SELECT MIN(Unit_Price) AS Lowest_Price
+FROM Orders;
+
+--6 Calculate percentage discount applied.
+-- Assuming a Discount column exists
+SELECT Order_ID,
+       Product_Name,
+       Unit_Price,
+       Discount,
+       (Discount / Unit_Price) * 100 AS Discount_Percentage
+FROM Orders;
+
+--7 Find modulus of Quantity divided by 2.
+SELECT Order_ID,
+       Quantity,
+       MOD(Quantity, 2) AS Quantity_Mod_2
+FROM Orders;
+
+--8 Convert negative values to positive.
+SELECT Order_ID,
+       Quantity,
+       Unit_Price,
+       ABS(Quantity) AS Quantity_Positive,
+       ABS(Unit_Price) AS Unit_Price_Positive
+FROM Orders;
+
+--9 Truncate price without rounding
+SELECT Unit_Price,
+       TRUNC(Unit_Price) AS Truncated_Price
+FROM Orders;
+
+--10 Find square root of total sales.
+SELECT Order_ID,
+       Quantity * Unit_Price AS Total_Sales,
+       SQRT(Quantity * Unit_Price) AS Sqrt_Total_Sales
+FROM Orders;
+
+--11 Calculate exponential value of a number.
+SELECT Unit_Price,
+       EXP(Unit_Price) AS Exp_Value
+FROM Orders;
+
+--12 Calculate power of 2^5.
+SELECT POWER(2, 5) AS Result
+FROM dual;
+
+--13 Find absolute difference between two prices
+SELECT ABS(
+           (SELECT Unit_Price FROM Orders WHERE Order_ID = 1005) -
+           (SELECT Unit_Price FROM Orders WHERE Order_ID = 1002)
+       ) AS Abs_Difference
+FROM dual;
+ -- 14 Calculate sales growth percentage.
+SELECT Order_ID,
+       Customer_Name,
+       Quantity * Unit_Price AS Total_Sales,
+       LAG(Quantity * Unit_Price) OVER (ORDER BY Order_Date) AS Previous_Sales,
+       ROUND(
+           ((Quantity * Unit_Price - LAG(Quantity * Unit_Price) OVER (ORDER BY Order_Date))
+            / LAG(Quantity * Unit_Price) OVER (ORDER BY Order_Date)) * 100, 2
+       ) AS Sales_Growth_Percentage
+FROM Orders;
+
+--15 Find random number between 1 and 100
+SELECT ROUND(DBMS_RANDOM.VALUE(1, 100)) AS Random_Number
+FROM dual;
+
+--16 Divide total sales by number of orders.
+
+SELECT SUM(Quantity * Unit_Price) / COUNT(*) AS Avg_Sales_Per_Order
+FROM Orders;
+
+--17 Find ceiling value of price
+SELECT Unit_Price,
+       CEIL(Unit_Price) AS Ceiling_Price
+FROM Orders;
+
+--18 Find floor value of price.
+SELECT unit_price,
+    FLORE(unit_price) AS flore_price
+FROM orders;
+
+--19 Convert decimal to integer.
+SELECT unit_price,
+    CAST(unit_price AS INT) AS integer_value
+FROM orders;
+
+--20 Calculate compound interest.
+
