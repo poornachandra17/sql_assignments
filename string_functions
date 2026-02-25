@@ -63,13 +63,8 @@ SELECT *
 FROM Customers
 WHERE Customer_Name LIKE 'A%';
 -- 8 Extract the domain name from Email_ID.
-SELECT Email_ID,
-       SUBSTR(Email_ID, INSTR(Email_ID, '@') + 1) AS Domain_Name
-FROM Customers;
+
 --9 Find the position of '@' in Email_ID
-SELECT Email_ID,
-       INSTR(Email_ID, '@') AS At_Position
-FROM Customers;
 
 --10 Reverse the Product_Name.
 SELECT Product_Name,
@@ -88,8 +83,7 @@ SELECT Customer_Name,
        LENGTH(Customer_Name) - LENGTH(REPLACE(LOWER(Customer_Name), 'a', '')) AS A_Count
 FROM Customers;
 --14 Mask the last 4 digits of a phone number.
-SELECT Phone_Number,
-       SUBSTR(Phone_Number, 1, LENGTH(Phone_Number)-4) || '****' AS Masked_Phone
+
 FROM Customers;
 -- 15 Split Full_Name into First_Name and Last_Name.
 SELECT Full_Name,
@@ -103,9 +97,6 @@ SELECT Product_Code,
 FROM Products;
 
 -- 17  Compare two columns ignoring case sensitivity.
-SELECT *
-FROM Customers
-WHERE UPPER(Column1) = UPPER(Column2);
 
 --18 Find customers whose name contains 'kumar'
 SELECT *
