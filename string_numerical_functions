@@ -117,7 +117,10 @@ SELECT Text_Column,
 FROM Your_Table;
 
 
--- numerical functions
+-- NUMERICAL FUNCTIONS 
+
+
+
 -- 1 Round Unit_Price to 2 decimal places.
 SELECT Unit_Price,
        ROUND(Unit_Price, 2) AS Rounded_Price
