@@ -1,1 +1,72 @@
+--1 Find sine value of an angle.
+SIN(RADIANS(angle_in_degrees))
+
+--2 Find cosine value of an angle.
+COS(RADIANS(angle_in_degrees))
+
+--3 Find tangent value.
+TAN(RADIANS(angle_in_degrees))
+
+--4 Convert degrees to radians.
+SELECT 45 * PI() / 180 AS Radian_Value;
+
+--5 Convert radians to degrees.
+SELECT 1.57 * 180 / PI() AS Degree_Value;
+
+--6 Find logarithm (base 10) of a number.
+SELECT LOG10(100) AS Log_Value;
+
+--7 Find natural log of a number
+SELECT LOG(10) AS Natural_Log_Value;
+
+--8 Find square of a number.
+SELECT POWER(5, 2) AS Square_Value;
+
+--9 Find cube of a number.
+SELECT POWER(5, 3) AS Cube_Value;
+
+--10 Calculate factorial of a number.
+
+--11 Find greatest value among three numbers.
+SELECT GREATEST(10, 25, 15) AS Greatest_Value;
+
+--12 Find least value among three numbers
+SELECT LEAST(10, 25, 15) AS Least_Value;
+
+--13 Calculate variance of sales
+SELECT VARIANCE(Quantity * Unit_Price) AS Sales_Variance
+FROM Orders;
+
+--14 Calculate standard deviation of sales.
+SELECT STDDEV(Quantity * Unit_Price) AS Sales_Std_Deviation
+FROM Orders;
+
+--15 Find average deviation.
+SELECT 
+AVG(ABS((Quantity * Unit_Price)
+       (SELECT AVG(Quantity * Unit_Price) FROM Orders))) AS Average_Deviation
+FROM Orders;
+
+--16 Calculate geometric mean.
+SELECT 
+EXP(AVG(LN(Quantity * Unit_Price))) AS Geometric_Mean
+FROM Orders;
+
+-- 17 Calculate harmonic mean.
+SELECT 
+COUNT(*) / SUM(1 / (Quantity * Unit_Price)) AS Harmonic_Mean
+FROM Orders;
+
+-- 18 Find sum of squares
+SELECT 
+SUM(POWER(Quantity * Unit_Price, 2)) AS Sum_of_Squares
+FROM Orders;
+
+-- 19 Calculate correlation between two columns
+SELECT CORR(Quantity, Unit_Price) AS Correlation_Value
+FROM Orders;
+
+--20 Calculate regression slope
+
+
 
