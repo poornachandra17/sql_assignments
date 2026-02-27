@@ -1,0 +1,71 @@
+--1 Replace NULL price with 0.
+SELECT COALESCE(Unit_Price, 0) AS Unit_Price
+FROM Orders;
+
+--2 Replace NULL Customer_Name with 'Unknown'.
+SELECT COALESCE(Customer_Name, 'Unknown') AS Customer_Name
+FROM Orders;
+
+--3 Count NULL values in Product_Name.
+SELECT COUNT(*) FROM Orders WHERE 
+Product_name is NULL;
+
+--4 Find rows where Order_Date is NULL.
+SELECT * FROM Orders
+WHERE Order_Date IS NULL;
+
+--5 Use COALESCE to return first non-null value.
+SELECT COALESCE(Customer_Name, 'Unknown') AS Customer_Name
+FROM Orders;
+
+--6 Use NVL to replace NULL values.
+SELECT NVL(unit_Price, 0) AS unit_Price
+FROM orders;
+
+--7 Use IFNULL function.
+SELECT IFNULL(unit_price, 0) AS unit_price
+FROM orders;
+
+--8 Check if column is NULL.
+SELECT * FROM orders WHERE product_name is NULL;
+
+--9 Check if column is NOT NULL.
+SELECT * FROM orders WHERE product_name is  NOT NULL;
+
+--10 Use NULLIF between two columns.
+SELECT 
+NULLIF(Quantity, Unit_Price) FROM Orders;
+
+--12 Count non-null values.
+SELECT 
+COUNT(Customer_name) FROM Orders WHERE Customer_Name IS NOT NULL;
+
+-- 13 Filter records where price is NULL or 0.
+SELECT 
+COUNT(unit_price) FROM Orders WHERE unit_price IS  NULL or 0;
+
+--14 Use CASE to handle NULL values.
+SELECT 
+CASE 
+    WHEN Unit_Price IS NULL THEN 0
+    ELSE Unit_Price
+END AS Unit_Price
+FROM Orders;
+
+--15 Compare NULL values properly.
+SELECT * FROM Orders WHERE Product_name is NULL;
+
+--17 Find average excluding NULL values.
+SELECT AVG(Unit_Price) AS Average_Unit_Price
+FROM Orders;
+
+--18 Find sum ignoring NULL values
+SELECT SUM(Unit_Price) AS Total_Unit_Price
+FROM Orders;
+
+--19 Identify columns containing NULL using metadata
+SELECT COUNT(*) FROM Orders 
+WHERE column_name IS NULL;
+
+--20 Convert NULL to default system date.
+SELECT NVL(Order_Date, SYSDATE) FROM Orders;
