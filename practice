@@ -49,3 +49,57 @@ SELECT
     RANK() OVER (ORDER BY commission_pct NULLS LAST) AS commission_rank
 FROM employees;
 
+
+-- 1 Create a table hr_emp_copy with columns employee_id, first_name, last_name, department_id. Add a PRIMARY KEY on employee_id and a FOREIGN KEY on department_id referencing hr.departments(department_id).
+CREATE TABLE hr_emp_copy (
+  employee_id   NUMBER(6),
+  first_name    VARCHAR2(20),
+  last_name     VARCHAR2(25),
+  department_id NUMBER(4),
+  PRIMARY KEY (employee_id),
+  FOREIGN KEY (department_id) REFERENCES hr.departments(department_id)
+);
+
+--2 Add a CHECK constraint on salary so that salary must be greater than 0. (If your table has no salary column, add it first with ALTER TABLE ... ADD salary NUMBER(8,2); then add the check.)
+ALTER TABLE hr_emp_copy ADD salary NUMBER(8,2);
+ALTER TABLE hr_emp_copy ADD CONSTRAINT chk_salary CHECK (salary > 0);
+
+--3 Find the constraint names and types for table hr.employees. Query USER_CONSTRAINTS (or ALL_CONSTRAINTS) where table_name = 'EMPLOYEES'.
+SELECT constraint_name, constraint_type, table_name
+FROM user_constraints
+WHERE table_name = 'EMPLOYEES';
+
+--4 Add a UNIQUE constraint on (department_id, job_id) to a copy of hr.employees (so the same department_id and job_id can appear, but not the same pair more than once if you intend uniqueness per pair).
+CREATE TABLE employees_copy AS
+SELECT *
+FROM hr.employees;
+ALTER TABLE employees_copy
+ADD CONSTRAINT emp_dept_job_uk
+UNIQUE (department_id, job_id);
+
+--5 Disable a constraint on your copy table, then enable it again. Use ALTER TABLE ... DISABLE CONSTRAINT name; and ENABLE CONSTRAINT name;
+
+-- 1️ Create a copy of hr.employees
+CREATE TABLE employees_copy AS
+SELECT *
+FROM hr.employees;
+
+-- 2️ Add UNIQUE constraint on (department_id, job_id)
+ALTER TABLE employees_copy
+ADD CONSTRAINT emp_dept_job_uk
+UNIQUE (department_id, job_id);
+
+-- 3️ Disable the constraint
+ALTER TABLE employees_copy
+DISABLE CONSTRAINT emp_dept_job_uk;
+
+-- 4️ Enable the constraint again
+ALTER TABLE employees_copy
+ENABLE CONSTRAINT emp_dept_job_uk;
+
+
+
+
+
+
+
