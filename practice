@@ -1,0 +1,51 @@
+CREATE TABLE employees_new (
+    id NUMBER PRIMARY KEY,
+    name VARCHAR2(10),
+    city VARCHAR2(10),
+    salary number(10,2) check (salary > 0)
+);
+INSERT INTO employees_new VALUES (1, 'Charan', 'Bangalore', 1000);
+INSERT INTO employees_new VALUES (2, 'Ravi', 'Hyderabad', 0);
+INSERT INTO employees_new VALUES (3, 'Anil', 'Chennai', -12453);
+INSERT INTO employees_new VALUES (4, 'Neha', 'Mumbai', 234567);
+INSERT INTO employees_new VALUES (5, 'John', 'Delhi', 3245647);
+
+
+
+
+
+
+---1.Rank employees by salary within each department. Show employee_id, first_name, department_id, salary, and rank. Use RANK() with PARTITION BY department_id ORDER BY salary DESC
+SELECT employee_id, first_name, department_id, salary,
+  RANK() OVER (PARTITION BY department_id ORDER BY salary DESC) AS salary_rank
+FROM hr.employees;
+
+-- 2 Get the top earner per department (one row per department). Use ROW_NUMBER() in a subquery/CTE, then filter WHERE rn = 1
+SELECT employee_id, first_name, department_id, salary
+FROM (
+  SELECT employee_id, first_name, department_id, salary,
+    ROW_NUMBER() OVER (PARTITION BY department_id ORDER BY salary DESC) AS rn
+  FROM hr.employees
+) sub
+WHERE rn = 1;
+
+--3 Assign DENSE_RANK by hire_date within each job_id. Show job_id, employee_id, hire_date, and dense_rank. Oldest hire in the job gets 1.
+
+SELECT job_id, employee_id, hire_date,
+  DENSE_RANK() OVER (PARTITION BY job_id ORDER BY hire_date) AS hire_rank
+FROM hr.employees;
+
+--5 Use NTILE(4) to assign each employee to one of four salary quartiles (over the whole table, ordered by salary). Show employee_id, salary, and quartile number.
+SELECT
+    employee_id,
+    salary,
+    NTILE(4) OVER (ORDER BY salary) AS salary_quartile
+FROM employees;
+
+-- 6 Rank employees by commission_pct with NULLS LAST (so NULL commission_pct appear at the end of the ranking).
+SELECT
+    employee_id,
+    commission_pct,
+    RANK() OVER (ORDER BY commission_pct NULLS LAST) AS commission_rank
+FROM employees;
+
